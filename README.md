@@ -77,6 +77,6 @@ Implementing real-time updates using websockets
 Improving accessibility for users with disabilities
 Adding support for different languages and locales
 
-##License
+## License
 
 The Prezophopia project is licensed under the MIT license. See the LICENSE file for more information.
