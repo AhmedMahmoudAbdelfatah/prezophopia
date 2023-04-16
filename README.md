@@ -51,10 +51,11 @@ git clone https://github.com/ahmedmamoudabdelfatah-gif/prezophopia.git
 ```
 npm install
 Start the development server by running the following command:
-
+```
+```
 npm start
 This will launch the Prezophopia website in your default browser at http://localhost:3000.
-
+```
 ## Features
 
 - User authentication: Users can create an account and log in to the website.
