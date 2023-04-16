@@ -1,0 +1,40 @@
+/* Start Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+:root {
+    --input-focus-color: #3180e7;
+    --input-placeholder-color: #5f6368;
+    --input-font-color: #202124;
+    --input-border-color: #dadce0;
+    --input-error-color: #d93025;
+
+    --main-color: #2196f3;
+    --main-color-alt: #1787e0;
+    --main-transition: 0.3s;
+    --main-section-padding: 100px;
+    --main-box-shadow-color: #FAFAFA;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    font-family: 'Work Sans', sans-serif;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

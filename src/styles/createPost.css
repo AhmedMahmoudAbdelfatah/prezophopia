@@ -1,0 +1,232 @@
+.CP-container {
+    position: fixed;
+    background: #00000050;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    color: #6f6f6f;
+}
+
+.CP-container .popup {
+    position: relative;
+    width: min(560px, 90%);
+    margin: 0 auto;
+    min-height: 350px;
+    max-height: 70vh;
+    margin-top: calc(8vh - 20px);
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #999;
+    overflow: auto;
+}
+
+.CP-container .popup header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 10px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.CP-container .popup header h1 {
+    font-size: 28px;
+}
+
+.CP-container .popup header .close {
+    font-size: 25px;
+    width: 32px;
+    height: 32px;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: 167ms;
+    transition-property: background-color, color;
+    
+}
+
+
+.CP-container .popup header .close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.CP-container .popup form textarea {
+    width: 100%;
+    min-height: 210px;
+    padding: 20px;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+.CP-container .popup form div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+}
+
+.CP-container .popup form div button[type="submit"] {
+    outline: none;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    position: relative;
+    transition: 0.2s;
+    padding: 10px 20px;
+    background-color: #eee;
+    color: #6f6f6f;
+}
+.CP-container .popup form div button[type="submit"]:enabled {
+    background-color: #3180e7;
+    color: #fff;
+}
+
+.CP-container .popup form div button[type="submit"]:enabled:hover {
+    background-color: #1a73e8;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3),
+        0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+
+.CP-container .popup form div button[type="submit"]:enabled:active {
+    background-color: #185abc;
+    transform: scale(0.98);
+}
+
+.CP-container .popup form div .options {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+}
+
+.CP-container .popup form div .options div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.288);
+    cursor: pointer;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: 167ms;
+    transition-property: background-color, color;
+    
+}
+
+.CP-container .popup form div .options div.enabled {
+    color: #6f6f6f;
+}
+
+.CP-container .popup form div .options div.enabled:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.CP-container .popup form div .options input {
+    display: none;
+}
+
+.CP-container .popup .imgs {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.CP-container .popup .imgs .img {
+    flex-basis: calc((100% - 20px)/ 3);
+    flex-grow: 1;
+    aspect-ratio: inherit;
+    max-height: 200px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+.CP-container .popup .imgs .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.CP-container .popup .imgs .img .remove-img {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    outline: 0;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: 167ms;
+    transition-property: background-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.CP-container .popup .imgs .img .remove-img:hover {
+    background-color: black;
+}
+
+.CP-container .popup .container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+.CP-container .popup .container .video {
+    position: relative;
+}
+
+.CP-container .popup .container .video video {
+    width: 100%;
+    aspect-ratio: inherit;
+    max-width: 350px;
+    margin: auto;
+}
+
+.CP-container .popup .container .video .remove-video {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    outline: 0;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: 167ms;
+    transition-property: background-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.CP-container .popup .container .video .remove-video:hover {
+    background-color: black;
+}
