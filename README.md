@@ -50,12 +50,14 @@ git clone https://github.com/ahmedmamoudabdelfatah-gif/prezophopia.git
 
 ```
 npm install
-Start the development server by running the following command:
 ```
+Start the development server by running the following command:
+
 ```
 npm start
-This will launch the Prezophopia website in your default browser at http://localhost:3000.
 ```
+This will launch the Prezophopia website in your default browser at http://localhost:3000.
+
 ## Features
 
 - User authentication: Users can create an account and log in to the website.
@@ -75,5 +77,6 @@ Implementing real-time updates using websockets
 Improving accessibility for users with disabilities
 Adding support for different languages and locales
 
-License
+##License
+
 The Prezophopia project is licensed under the MIT license. See the LICENSE file for more information.
