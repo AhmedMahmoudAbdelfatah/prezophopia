@@ -199,3 +199,38 @@
     height: 14px;
     font-size: 7px;
 }
+
+@media (max-width: 432px) {
+    .post .full-comment .comment-actions .comment-feed .reactions > div {
+        font-size: 14px;
+    }
+
+    .post .full-comment .comment-actions .comment-feed .reactions > div:hover:nth-child(n) {
+        font-size: 20px;
+        transition: font-size 0.15s;
+    }
+
+    .post .full-comment .comment-actions .comment-feed .reactions .love:hover:nth-child(n) {
+        font-size: 10px;
+    }
+
+    .post .full-comment .comment-actions .comment-feed .reactions .love:hover {
+        width: 20px;
+        height: 20px;
+    }
+
+    .post .full-comment .comment-actions .comment-feed .reactions > div.love {
+        width: 15px;
+        height: 15px;
+        font-size: 7px;
+    }
+
+    .post header>div {
+        font-size: 12px;
+    }
+
+    .post footer .actions .comment svg,
+    .post footer .actions .share svg {
+        height: 14px !important;
+    }
+}

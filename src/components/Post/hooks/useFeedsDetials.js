@@ -30,7 +30,7 @@ export const useFeedsDetials = (initialFeeds) => {
         },
         4: {
             class: "laughing",
-            desc: "Hahaha",
+            desc: "Haha",
             emoji: <Emoji symbol="&#x1F602;" />,
         },
         5: {

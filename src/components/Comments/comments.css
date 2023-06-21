@@ -38,7 +38,7 @@
 
 .post .comments .comment .input-container input {
     max-width: calc(100% - 72px);
-    border: 2px solid #b2b2b2;
+    border: 1px solid #b2b2b2;
     border-radius: 25px;
     padding: 12px;
 }
@@ -50,3 +50,9 @@
     z-index: 5;
 }
 
+@media (max-width: 432px) {
+    .post .comments .comment .input-container input {
+        padding: 8px;
+        border-radius: 20px;
+    }
+}

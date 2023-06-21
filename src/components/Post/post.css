@@ -132,7 +132,7 @@
 .post footer .details .feeds .emojis .love {
     width: 14px;
     height: 14px;
-    font-size: 7px;
+    font-size: 6px;
 }
 
 
@@ -148,7 +148,7 @@
 .post footer .actions > div {
     transition-timing-function: cubic-bezier(.4, 0, .2, 1);
     transition-duration: 167ms;
-    padding: 15px;
+    padding: 15px 0;
     cursor: pointer;
     border-radius: 5px;
     transition-property: background-color, color;
@@ -172,7 +172,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 15px;
+    padding: 15px 0;
 }
 
 .post .actions .feed-container > div {
@@ -209,7 +209,7 @@
     color: white;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 .post .actions .feed-container .love ~ span {
@@ -305,3 +305,75 @@
     max-width: 350px;
     margin: auto;
 }
+
+@media (max-width: 432px) {
+    .post {
+        font-size: 12px;
+    }
+    .post footer .details {
+        font-size: 11px;
+    }
+    .post footer .details .feeds .emojis .sad,
+    .post footer .details .feeds .emojis .angry,
+    .post footer .details .feeds .emojis .laughing {
+        font-size: 12px;
+    }
+    .post footer .details .feeds .emojis .like {
+        font-size: 12px;
+    }
+    .post footer .details .feeds .emojis .love {
+        width: 12px;
+        height: 12px;
+    }
+    .post footer .actions {
+        font-size: 12px;
+    }
+    .post .actions .feed-container > div {
+        font-size: 14px;
+    }
+
+    .post div.like {
+        font-size: 14px;
+    }
+
+    .post .actions .feed-container .laughing,
+    .post .actions .feed-container .sad,
+    .post .actions .feed-container .angry {
+        font-size: 15.5px;
+    }
+
+    .post .love {
+        font-size: 7px;
+        width: 17px;
+        height: 17px;
+    }
+    .post .actions .feed-container .reactions > div {
+        font-size: 14px;
+    }
+
+    .post .actions .feed-container .reactions>div:hover:nth-child(n) {
+        font-size: 20px;
+        transition: font-size 0.15s;
+    }
+
+    .post .actions .feed-container .reactions .love:hover:nth-child(n) {
+        font-size: 10px;
+    }
+
+    .post .actions .feed-container .reactions .love:hover {
+        width: 20px;
+        height: 20px;
+    }
+    .post .actions .feed-container .reactions>div.love {
+        width: 15px;
+        height: 15px;
+        font-size: 7px;
+    }
+    .post header > div {
+        font-size: 12px;
+    }
+    .post footer .actions .comment svg,
+    .post footer .actions .share svg {
+        height: 14px !important;
+    }
+} 
