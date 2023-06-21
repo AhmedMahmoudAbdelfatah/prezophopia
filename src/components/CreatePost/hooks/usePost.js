@@ -25,9 +25,9 @@ const transformPost = (post) => {
 };
 
 export const usePost = (post) => {
-    const [user] = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const formData = transformPost(post);
-    const result = useQuery("create-post", () => sendPost(formData, user.accessToken), {
+    const result = useQuery("create-post", () => sendPost(formData, user?.accessToken), {
         cacheTime: 0,
         enabled: false,
     });

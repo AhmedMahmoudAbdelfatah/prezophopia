@@ -1,7 +1,7 @@
 .post {
     width: 100%;
     background-color: #ffff;
-    padding: 15px 15px 0;
+    padding: 15px;
     border-radius: 10px;
     font-size: 14px;
 }
@@ -59,11 +59,82 @@
 .post footer .details {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     font-size: 12px;
     padding: 8px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
+
+.post footer .details .feeds {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.post footer .details .feeds .emojis {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.post footer .details .feeds .emojis div:nth-child(2) {
+    position: relative;
+    left: -4px;
+    z-index: 1;
+}
+
+.post footer .details .feeds .emojis div:nth-child(3) {
+    position: relative;
+    left: -8px;
+    z-index: 2;
+}
+
+.post footer .details .feeds .emojis div:nth-child(4) {
+    position: relative;
+    left: -12px;
+    z-index: 3;
+}
+.post footer .details .feeds .emojis div:nth-child(5) {
+    position: relative;
+    left: -14px;
+    z-index: 4;
+}
+.post footer .details .feeds .emojis div:nth-child(5) {
+    position: relative;
+    left: -18px;
+    z-index: 5;
+    border-radius: 50%;
+
+}
+.post footer .details .feeds .feeds-number {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+
+.post footer .details .feeds .emojis .sad,
+.post footer .details .feeds .emojis .angry,
+.post footer .details .feeds .emojis .laughing {
+    font-size: 14px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.post footer .details .feeds .emojis .like {
+    font-size: 14px;
+    background-color: white;
+    border-radius: 50%;
+    padding-left: 2px;
+}
+
+.post footer .details .feeds .emojis .love {
+    width: 14px;
+    height: 14px;
+    font-size: 7px;
+}
+
 
 .post footer .actions {
     display: flex;
@@ -74,7 +145,7 @@
     padding: 8px;
 }
 
-.post footer .actions div {
+.post footer .actions > div {
     transition-timing-function: cubic-bezier(.4, 0, .2, 1);
     transition-duration: 167ms;
     padding: 15px;
@@ -83,17 +154,117 @@
     transition-property: background-color, color;
 }
 
-.post .actions div.liked {
-    color: #0a66c2;
-}
 
-.post .actions div:hover {
+.post .actions > div:hover {
     background-color: #ebebeb;
 }
 
 .post .actions div:active {
     background-color: rgba(0, 0, 0, 0.12);
     color: rgba(0, 0, 0, 0.9);
+}
+
+.post .actions .feed-container {
+    position: relative;
+    padding: 0;
+}
+.post .actions .feed-container .feed {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 15px;
+}
+
+.post .actions .feed-container > div {
+    font-size: 16px;
+}
+
+.post  div.like {
+    color: #0a66c2;
+    font-size:  16px;
+}
+.post .actions .feed-container div.like ~ span {
+    color: #0a66c2;
+}
+
+.post .actions .feed-container .laughing,
+.post .actions .feed-container .sad,
+.post .actions .feed-container .angry {
+    font-size: 18px;
+}
+
+.post .actions .feed-container  .laughing~span,
+.post .actions .feed-container .sad~span,
+.post .actions .feed-container .angry~span {
+    color: #F7B928;
+}
+
+
+.post .love {
+    display: flex;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.post .actions .feed-container .love ~ span {
+    color: red;
+}
+
+.post .actions .feed-container .reactions {
+    display: none;
+    position: absolute;
+    top: -15px;
+    left: -32px;
+    background-color: white;
+    column-gap: 3px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    width: 130px;
+    height: 25px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.4);
+    cursor: none;
+}
+
+
+.post .actions .feed-container.hoverable:hover .reactions,
+.post .actions .feed-container.hoverable:focus .reactions { 
+    opacity: 1;
+    display: flex;
+}
+
+
+
+.post .actions .feed-container .reactions > div {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.post .actions .feed-container .reactions > div:hover:nth-child(n)  {
+   font-size: 22px;
+   transition: font-size 0.15s;
+}
+.post .actions .feed-container .reactions .love:hover:nth-child(n) {
+    font-size: 11px;
+}
+.post .actions .feed-container .reactions .love:hover {
+    width: 23px;
+    height: 23px;
+}
+
+.post .actions .feed-container .reactions > div.love {
+    width: 17px;
+    height: 17px;
+    font-size: 9px;
+    transition: width 0.15s , height 0.15s;
 }
 
 .post header > div {
@@ -133,55 +304,4 @@
     aspect-ratio: inherit;
     max-width: 350px;
     margin: auto;
-}
-
-.post .comments .comment .input-container button[type="submit"] {
-    outline: none;
-    border: none;
-    width: fit-content;
-    height: fit-content;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    position: relative;
-    transition: 0.2s;
-    padding: 10px 20px; 
-    background-color: #3180e7;
-    color: #fff;
-}
-
-.post .comments .comment .input-container button[type="submit"]:enabled:hover {
-    background-color: #1a73e8;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3),
-        0 1px 3px 1px rgba(60, 64, 67, .15);
-}
-
-.post.comments .comment .input-container button[type="submit"]:active {
-    background-color: #185abc;
-    transform: scale(0.98);
-}
-
-.post .comments .comment {
-    display: flex;
-    align-items: center;
-    padding-bottom: 15px;
-}
-
-.post .comments .comment .input-container {
-    width: 100%;
-    margin-left: 10px;
-    position: relative;
-}
-.post .comments .comment .input-container input {
-    max-width: calc(100% - 72px);
-    border: 2px solid #b2b2b2;
-    border-radius: 25px;
-    padding: 12px;
-}
-
-.post .comments .comment .input-container div{
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 5;
 }

@@ -1,42 +1,38 @@
-import React, { useEffect, useRef } from 'react'
-// import { useMediaDevice } from './hooks/useMediaDevice';
-import { io } from 'socket.io-client'
-
+import { UserContext } from '../../features/UserContext';
+import './videoStream.css';
+import { useContext, useState } from "react";
 const VideoStream = () => {
-    // const videoRef = useRef(null);
-    // const canvasRef = useRef(null);
-    // const image = useMediaDevice(videoRef, canvasRef, 10);
-    const socket = useRef();
+    const { user } = useContext(UserContext);
+    const IFRAMEURL = `http://localhost:5051/${ user.id }`;
+    const [isStart, setIsStart] = useState(false);
+    const [iframeUrl, setIframeUrl] = useState('');
 
-    useEffect(() => {
-        console.log("hello");
-        socket.current = io('/');
-        console.log("hello1");
-        socket.current.on("connect", (data) => {
-            console.log("connected data: ", data);
-        });
-    }, []);
+    const handleStart = () => {
+        setIsStart(true);
+        setIframeUrl(IFRAMEURL);
+    }
 
-    // useEffect(() => {
-    //     socket.current.emit("image", { image });
-        
-    //     return () => socket.current.off("image");
-    // }, [image]);
-
-    // useEffect(() => {
-    //     socket.current.on("recieve_img", (data) => {
-    //         console.log(data);
-    //     });
-
-    //     return () => socket.current.off("recieve_img");
-    // }, [socket])
-
+    const handleStop = () => {
+        setIsStart(false);
+        setIframeUrl('');
+    }
+    
     return (
-        <div>
-        {/* <video ref={videoRef} width="640" height="480" autoPlay  style={{display: "none"}}/>
-        <canvas ref={canvasRef} width="640" height="480" style={{display: "none"}}/> */}
-        </div>
+        <div className="video-stream">
+            <div className="iframe-container">
+                <iframe src={iframeUrl} frameBorder="0" title="ai"></iframe>
+            </div>
+            <div className='btn-container'>
+                {
+                    isStart ?
+                        <button type="button" onClick={handleStop}> Stop </button>
+                        :
+                        <button type="button" onClick={handleStart}> Start </button>
+                }
+            </div>
+       </div>
     );
 }
+
 
 export default VideoStream

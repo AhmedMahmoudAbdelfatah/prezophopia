@@ -34,7 +34,7 @@ export default function SignIn() {
     const onLoginFormSubmit = async (e) => {
         e.preventDefault();
         const {isError, error} = await refetch();
-        if (!isError) navigate('/');
+        if (!isError) navigate('/', { replace: true });
         else console.log(error);
     }
 

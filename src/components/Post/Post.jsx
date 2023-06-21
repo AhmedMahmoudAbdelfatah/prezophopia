@@ -1,20 +1,27 @@
+import "./post.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserAlt, faEllipsisH, faThumbsUp, faComment, faShare} from "@fortawesome/free-solid-svg-icons";
-import "./post.css"
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import useComments from "../../customHooks/useComments";
+import { faUserAlt, faEllipsisH, faComment, faShare } from "@fortawesome/free-solid-svg-icons";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { usePostReactions } from "./hooks/usePostReactions";
+import Comments from "../Comments/Comments";
+import { UserContext } from "../../features/UserContext";
+import { useFeedsDetials } from "./hooks/useFeedsDetials";
+import { getFeedsCountPosition } from "./utils/getFeedsCountPosition";
+import { displayFeedsCount } from "./utils/displayFeedsCount";
 
 export default function Post(props) {
-    const [comments, setComments, handle] = useComments();
     const [isComment, setIsComment] = useState(false);
-    const [comment, setComment] = useState("");
     const [text, setText] = useState(props.text?.substring(0, 200));
+    const [commentsCount, setCommentsCount] = useState(props.comments_count);
 
-    const { likeAction, refetch } = usePostReactions(props.id);
+    const { likeAction, refetch, postReactionType, displayReactions, setDisplayReactions } = usePostReactions(props.id, +props.myFeed);
     
+    const { feedsTypes, numberOfFeeds, postFeeds, changeFeeds } = useFeedsDetials(props.feeds);
+
+    const { user } = useContext(UserContext);
+    
+    const navigate = useNavigate();
 
     const expandBody = (e) => {
         setText(props.text);
@@ -23,35 +30,17 @@ export default function Post(props) {
 
     const handleCommentClick = () => {
         if (!isComment) {
+            if (!user?.accessToken) navigate('/signin')
             setIsComment(true);
-            setComments(handle, props.id);
         }
-        else setComment(false);
+        else setIsComment(false);
     }
 
-    const handlePostComment = async (e) => {
-        e.preventDefault();
-        if (comment) {
-            try {
-                const response = await axios.post("http://localhost:8080/api/comment/write", {
-                    post_id: props.id,
-                    text: comment
-                } , {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization:
-                            "Bearer " + JSON.parse(localStorage.getItem("user"))?.accessToken,
-                    },
-                });
-                console.log(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
+   
+   
 
     return (
-        <div class="post" key={props.id}>
+        <div class="post">
             <header>
                 <div>
                     <div className="img"><FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /></div>
@@ -74,42 +63,59 @@ export default function Post(props) {
                 {props.vedio_url ? <video src={ `http://localhost:8080/${props.vedio_url}`} controls /> : null}
             </section>
             <footer>
-                {/* <div class="details">
-                    <div class="feeds">wdawd and 500 others</div>
-                    <div class="comments-shares">
-                        <span>52 comments</span>
-                        <span>10 shares</span>
+                <div className="details">
+                    <div className="feeds">
+                        {
+                            numberOfFeeds ? (
+                                <>
+                                    <div className="emojis">
+                                        {
+                                            feedsTypes.map((type) => {
+                                                return (
+                                                    <div className={`${postFeeds[type]?.class}`} key={type}>
+                                                        { postFeeds[type]?.emoji }
+                                                    </div> 
+                                                );
+                                            })
+                                        }
+                                    </div>
+                                    <div className="feeds-number" style={{right: getFeedsCountPosition(numberOfFeeds, feedsTypes.length)}}> { displayFeedsCount(numberOfFeeds) } </div>
+                                </>
+                            ) : null
+                        }
                     </div>
-                </div> */}
+                    <div className="comments-shares">
+                        <span>{commentsCount} comments</span>
+                    </div>
+                </div>
                 <div className="actions">
-                    <div role={"button"} className={`feed ${props.myFeed > 0? "liked" : ""}`} onClick={(e) => likeAction(e, refetch, 1)}> <FontAwesomeIcon icon={faThumbsUp} style={{height:"16px", marginRight: "5px"}} /> like</div>
+                    <div role={"button"} className={`feed-container ${displayReactions? "hoverable" : ''}`} onMouseLeave={() => {
+                        setDisplayReactions(true);
+                    }}>
+                        <div className="feed" onClick={({currentTarget}) => likeAction(currentTarget, refetch, postReactionType, changeFeeds)}>
+                            <div className={postFeeds[postReactionType]?.class}>
+                                { postFeeds[postReactionType]?.emoji }
+                            </div>
+                            <span>{ postFeeds[postReactionType]?.desc }</span>
+                        </div>
+                        <div className="reactions">
+                            {
+                                Object.entries(postFeeds).slice(2).map(([key, value]) => {
+                                    return (
+                                        <div className={`${value?.class}`} onClick={({currentTarget}) => likeAction(currentTarget, refetch, key, changeFeeds)} key={key}>
+                                            { value?.emoji }
+                                        </div>  
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
                     <div role={"button"} className="comment" onClick={handleCommentClick}> <FontAwesomeIcon icon={faComment} style={{height:"16px", marginRight: "5px"}}/> comment</div>
                     <div role={"button"} className="share"><FontAwesomeIcon icon={faShare} style={{height:"16px", marginRight: "5px"}}/> share</div>
                 </div>
             </footer>
             {isComment ?
-                <section className="comments">
-                    <form className="comment" onSubmit={handlePostComment}>
-                        <div className="img">
-                            {props?.author?.image_url ?
-                                <img src={`http://localhost:8080/${props.author.imgUrl}`} alt=""  />
-                                : <FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /> 
-                            }
-                        </div>
-                        <div className="input-container">
-                            <input type="text" onChange={(e) => setComment(e.target?.value || "")} value={ comment } />
-                            <div>
-                                { comment && <button type='submit'>post</button>}
-                            </div>
-                        </div>
-                    </form>
-                    {comments?.length ?
-                        comments.map((comment) => {
-                            return <div>{ comment }</div>
-                        })
-                        : null
-                    }
-                </section>
+                <Comments post_id={props.id} img_url={user.image_url} setCommentsCount={ setCommentsCount } />
                 : null}
         </div>
     );

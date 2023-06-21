@@ -6,6 +6,8 @@ export const usePostHandlers = () => {
     const [enable_inputs, set_enable_inputs] = useState(true);
     const submit_ref = useRef();
 
+    const { refetch } = usePost(post);
+
     useEffect(() => {
         if (post.images?.length || post.video || post.file || post.text)
             submit_ref.current.disabled = false;
@@ -53,7 +55,7 @@ export const usePostHandlers = () => {
         });
     };
 
-    const { refetch } = usePost(post);
+  
 
     const handleSubmit = async (e, close) => {
         e.preventDefault();

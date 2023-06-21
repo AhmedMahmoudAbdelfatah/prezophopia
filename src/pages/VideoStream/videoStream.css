@@ -1,0 +1,45 @@
+.video-stream {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 72px);
+    margin-top: 72px;
+    flex-wrap: wrap;
+}
+
+.video-stream iframe {
+    width: 700px;
+    aspect-ratio: 1;
+}
+
+.btn-container {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-stream button {
+    outline: none;
+    border: none;
+    width: fit-content;
+    padding: 10px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #3180e7;
+    font-weight: 600;
+    position: relative;
+    transition: 0.2s;
+}
+
+
+.video-stream button:hover {
+    background-color: #1a73e8;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3),
+        0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+
+.video-stream button:active {
+    background-color: #185abc;
+}

@@ -1,0 +1,57 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 260px);
+    width: 100%;
+}
+
+.loading {
+    display: flex;
+    gap: 10px;
+    width: 100px;
+    position: relative;
+}
+
+.shape {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #3498db;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.shape-1 {
+    top: 0;
+    left: 0;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    top: 0;
+    right: 0;
+    animation-delay: 0.2s;
+}
+
+.shape-3 {
+    bottom: 0;
+    left: 0;
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}

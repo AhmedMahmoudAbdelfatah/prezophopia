@@ -1,6 +1,5 @@
 import React from "react";
 import "./Profile.css"
-import Navbar from "../../components/Navbar/Navbar";
 import { useState } from "react";
 import Education from "./Profile/Education"
 import Skills from "./Profile/Skills"
@@ -64,7 +63,6 @@ const [profilePicture, setProfilePicture] = useState('images/noprofil.jpeg');
 
   return (
       <div>
-      <Navbar />
       <div>
           <div className="profile"> 
 
