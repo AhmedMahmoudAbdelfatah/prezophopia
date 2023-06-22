@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Profile.css"
-import { useState } from "react";
-import Education from "./Profile/Education"
-import Skills from "./Profile/Skills"
-import Contact from "./Profile/Contact"
-import About from "./Profile/About"
+import Navbar from "../../components/Navbar/Navbar";
+import Posts from "../Posts/Posts"
+import Education from "./Education"
+import Skills from "./Skills"
+import Contact from "./Contact"
+import About from "./About"
+import { useState , useEffect} from "react";
+import axios from "axios";
+import { UserContext } from "../../features/UserContext";
+import { useParams } from "react-router-dom";
 
 
-
-export default function Profile( props ) {
-
-
-
-
+export default function Profile(props) {
+    const { userId } = useParams();
+    const { user } = useContext(UserContext);
+    
+    const isAuthorized  = +user.id === +userId;
 
   const [toggleState, setToggleState] = useState(1);
 
@@ -21,73 +25,172 @@ export default function Profile( props ) {
   };
 
 
+   // Start Cover Photo
+    const [userPosts, setUserPosts] = useState([]);
+   // ...
 
-//Start Cover Photo
-const [coverPhoto, setCoverPhoto] = useState('images/nocover.jpeg');
+
+  const [profileUsername, setName] = useState('');
+ // ...
+
+  // Start Cover Photo
+  const [coverimage, setCoverPhoto] = useState('');
+  // ...
+
+  // Start Profile PIC
+  const [image, setProfilePicture] = useState('');
+  // ...
 
   const handleCoverPhotoChange = (event) => {
     const file = event.target.files[0];
+    // Make an HTTP POST request to send the cover photo to the backend
+    const formData = new FormData();
+    formData.append('coverimage', file);
+    console.log(file)
 
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        setCoverPhoto(e.target.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
+    axios.post('http://localhost:8080/api/profile/upload-coverimage', formData , {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization:
+            "Bearer " + user.accessToken
+          }} )
+      .then((response) => {
+        // Handle the response from the backend if needed
+        console.log(response);
+        setCoverPhoto(URL.createObjectURL(file))
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the request
+        console.log(error);
+      });
+      
   };
-//End Cover Photo
 
 
-// Start Profile PIC
-const [profilePicture, setProfilePicture] = useState('images/noprofil.jpeg');
+
+
 
   const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
+    // Make an HTTP POST request to send the cover photo to the backend
+    const formData = new FormData();
+    formData.append('image', file);
 
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        setProfilePicture(e.target.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
+    axios.post('http://localhost:8080/api/profile/upload-image', formData , {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization:
+            "Bearer " + user.accessToken
+          }} )
+      .then((response) => {
+        // Handle the response from the backend if needed
+        console.log(response);
+        setProfilePicture(URL.createObjectURL(file))
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the request
+        console.log(error);
+      });
+      
   };
-// End Profile PIC
 
+// FOLLOW BUTTON
+const [isFollowingValue, setIsFollowingValue] = useState([]);
+
+  // console.log(isFollowing)
+
+  const handleFollow = async() => {
+    // if(isFollowingValue === null){setIsFollowing(false)}
+      try {
+          const followingResponse = await axios.get(`http://localhost:8080/api/profile/follow/${userId}` , {
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization:
+                          "Bearer " + user.accessToken
+                    }}
+            );
+                        
+            console.log(followingResponse)
+          setIsFollowingValue((prev) => [...prev, userId]);
+          
+      } catch (error) {
+        console.log(error);
+      }
+  };
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch the aboutText data from the API
+        const response = await axios.get(`http://localhost:8080/api/profile/${userId}` , {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+                "Bearer " + user.accessToken
+              }}
+              );
+              setProfilePicture(response?.data?.data?.image_url);
+              setCoverPhoto(response?.data?.data?.coverImage_url);
+              // console.log(response.data.data.user.id)
+              setName(response.data.data.user.username)
+            setUserPosts(response.data.data.user.userPosts)
+            const followingResponse = await axios.get(`http://localhost:8080/api/profile/following/get/${userId}` , {
+                        headers: {
+                        "Content-Type": "application/json",
+                        Authorization:
+                            "Bearer " + user.accessToken
+                        }}
+                );           
+            console.log(followingResponse)
+            setIsFollowingValue(followingResponse.data.data)
+              
+      } catch (error) {
+        console.log("Error fetching Data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
 
 
   return (
       <div>
+      <Navbar />
       <div>
           <div className="profile"> 
 
           <div className="profile-container">
           <div class="upload-cover">
-            <img src={coverPhoto} alt="Cover Photo" className="cover-photo" width="100%"/>
+            <img src={coverimage?`http://localhost:8080/${coverimage}`:'images/nocover.jpeg'} alt="Cover Img" className="cover-photo" width="100%"/>
               <div className="round">
-                <label htmlFor="cover-input">Upload Cover Photo</label>
+                <label htmlFor="cover-input" className="label">Change cover photo</label>
                 <input type="file" id="cover-input" accept="image/*" onChange={handleCoverPhotoChange} />
               </div>
           </div>
 
 
+
+          <button className="follow-btn" onClick={handleFollow}>
+          { isFollowingValue.indexOf(userId) >= 0? 'Following' : 'Follow'}
+          </button>
+
+
+
             <div class="upload">
-              {/* <img src="images/noprofil.jpg" width = "100" height = "100"  alt=""/>
-              <div class="round">
-                <input type="file"></input>
-                <i class="fa-solid fa-camera"></i>
-              </div> */}
-              <img src={profilePicture} alt="Profile Picture" className="profile-picture" width = "100" height = "100"/>
+              <img src={image?`http://localhost:8080/${image}`:'images/noprofil.jpeg'} alt="Profile Img" className="profile-picture" width = "100" height = "100"/>
               <div className="round">
                 <input type="file" onChange={handleProfilePictureChange} />
                 <i class="fa-solid fa-camera"></i>
               </div>
-            <p className="name">Profile name</p>
+            <p className="profileUsername">{profileUsername === ''? 'userName' : profileUsername}</p>
             </div>
         </div>
 
@@ -129,11 +232,7 @@ const [profilePicture, setProfilePicture] = useState('images/noprofil.jpeg');
           <div
             className={toggleState === 1 ? "content  active-content" : "content"}
           >
-            <h2>Posts</h2>
-            <hr />
-            <ul >
-            
-            </ul>
+            {/* <Posts id={ isAuthorized? user.id : '' } /> */}
           </div>
 
 

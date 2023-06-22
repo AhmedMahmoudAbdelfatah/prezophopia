@@ -4,6 +4,8 @@ import { useFeedsDetials } from './hooks/useFeedsDetials.js'
 import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getFeedsLeftPadding } from './utils/getFeedsLeftPadding';
+import { useState } from 'react';
+import Replays from '../Replays/Replays';
 
 
 const Comment = (props) => {
@@ -11,6 +13,8 @@ const Comment = (props) => {
     const { likeAction, refetch, commentReactionType, displayReactions, setDisplayReactions } = useCommentReactions(props.id, props.myFeed);
 
     const { feedsTypes, numberOfFeeds, commentFeeds, changeFeeds } = useFeedsDetials(props.feeds);
+
+    const [isReplay, setIsReplay] = useState(false);
 
     return (
         <section className="comment-container" key={props?.id}>
@@ -62,8 +66,11 @@ const Comment = (props) => {
                             }
                         </div>
                     </div>
-                    <div role={"button"} className="reply" > reply </div>
+                    <div role={"button"} className="reply" onClick={() => setIsReplay((prev) => !prev)}> reply </div>
                 </div>
+                {
+                    isReplay ? <Replays id={props.id} /> : null
+                }
             </div>
         </section>
     )

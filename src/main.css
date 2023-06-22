@@ -24,6 +24,10 @@ a {
 }
 
 
+a {
+    text-decoration: none;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -38,3 +42,9 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+
+html {
+    scroll-behavior: smooth;
+}
+

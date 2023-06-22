@@ -10,8 +10,8 @@ import { usePosts } from "./hooks/usePosts";
 import Loading from "../../components/Loading/Loading";
 
 
-export default function Posts() {
-    const { data: posts, refetch:getPosts, isLoading, isFetching, isFetchedAfterMount } = usePosts();
+export default function Posts(props) {
+    const { data: posts, refetch:getPosts, isLoading, isFetching, isFetchedAfterMount } = usePosts(props?.id);
     const [isOpen, setIsOpen] = useState(false);
     const { user } = useContext(UserContext);
 

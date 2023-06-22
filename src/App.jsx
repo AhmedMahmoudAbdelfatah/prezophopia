@@ -20,7 +20,7 @@ function App() {
                     <Route element={ <Home />} path=""/>
                     <Route element={<Posts />} path="posts" />
                     <Route element={<PrivateRoute />}>
-                        <Route element={<Profile />} path="profile" />
+                        <Route element={<Profile />} path="profile/:userId" />
                         <Route element={<VideoStream />} path="stream" />
                     </Route>
                 </Route>

@@ -4,10 +4,13 @@ import { useQuery } from "react-query";
 import { UserContext } from "../../../features/UserContext";
 
 
-export const usePosts = () => {
+export const usePosts = (id) => {
     const { user } = useContext(UserContext);
     const getPosts = () => {
-        return axios.get("http://localhost:8080/api/post/all", {
+        const URL = id
+            ? `http://localhost:8080/api/profile/posts/all/${id}`
+            : "http://localhost:8080/api/post/all";
+        return axios.get(URL, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + user?.accessToken
