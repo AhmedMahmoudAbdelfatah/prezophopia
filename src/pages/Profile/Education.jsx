@@ -320,7 +320,7 @@ const handleDeleteEducation = (index) => {
 
 const handleEditEducation = (index) => {
   const educationToEdit = educationData[index];
-  setNewEducation({...educationToEdit, from: new Date(educationToEdit.from).toLocaleDateString(),  to: new Date(educationToEdit.to).toLocaleDateString(),});
+  setNewEducation({...educationToEdit, from: educationToEdit.from.split('T')[0],  to: educationToEdit.to.split('T')[0],});
   setEditEducationIndex(index);
 };
 
@@ -368,8 +368,8 @@ useEffect(() => {
                     <div>
                       <div className="institute name">{education?.instituteName}</div>
                       <div className="degree">{education?.degree}</div>
-                      <div className="from">{new Date(education?.from).toLocaleDateString()}</div>
-                      <div className="to">{new Date(education?.to).toLocaleDateString()}</div>
+                      <div className="from">{education?.from?.split('T')[0]}</div>
+                      <div className="to">{education?.to?.split('T')[0]}</div>
                     </div>
                     <div className="buttons-container">
                       <button className="edit-button" onClick={() => handleEditEducation(index)}>
@@ -406,8 +406,7 @@ useEffect(() => {
                     name="from"
                     value={newEducation?.from}
                     onChange={handleEducationInputChange}
-                    placeholder="dd/mm/yy"
-                    pattern="\d{2}(/|-)\d{2}(/|-)\d{4}"
+                    placeholder="yyyy/mm/dd"
                   />
                  
                   <input
@@ -416,8 +415,7 @@ useEffect(() => {
                     name="to"
                     value={newEducation?.to}
                     onChange={handleEducationInputChange}
-                    placeholder="dd/mm/yy"
-                    pattern="\d{2}(/|-)\d{2}(/|-)\d{4}"   
+                    placeholder="yyyy/mm/dd"   
                   />
                   <button className="add-button input-to-add" onClick={handleAddEducation}>
                     {editEducationIndex !== null ? 'Update' : 'Add'}
@@ -433,12 +431,16 @@ useEffect(() => {
                    educationData?.length?
                         <ul className="education-list">
                         {educationData?.map((item, index) => (
-                            <li key={index}>
-                            <p>{item?.degree}</p>
-                            <h3>{item?.instituteName}</h3>
-                            <p>{item?.from}</p>
-                            <p>{item?.to}</p>
-                            </li>
+                            
+                            item?.degree? 
+                                <li key={index}>
+                                    <p>{item?.degree}</p>
+                                    <h3>{item?.instituteName}</h3>
+                                    <p>{item?.from?.split('T')[0]}</p>
+                                    <p>{item?.to?.split('T')[0]}</p>
+                                </li>
+                            : null
+                            
                         ))}
                         </ul>
                     : null

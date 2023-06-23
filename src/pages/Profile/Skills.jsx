@@ -92,6 +92,8 @@ import { useState , useEffect} from "react";
 import axios from "axios";
 import { UserContext } from "../../features/UserContext";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -176,7 +178,10 @@ export default function Skills(props) {
             {skills.map((skill, index) => (
               <li key={index}>
                 <span className="text">{skill}</span>
-                <button className="delete-button" onClick={() => handleDeleteSkill(index)}><i class="fa-solid fa-delete-left"></i></button>
+                    <button className="delete-button" onClick={() => handleDeleteSkill(index)}>
+                        {/* <i class="fa-solid fa-delete-left"></i> */}
+                        <FontAwesomeIcon icon={faDeleteLeft}/>
+                    </button>
               </li>
             ))}
             <li className="add-li">

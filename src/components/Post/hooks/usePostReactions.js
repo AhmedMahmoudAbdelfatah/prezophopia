@@ -12,7 +12,7 @@ export const usePostReactions = (post_id, reactionType) => {
 
     const postReaction = ({ queryKey }) => {
         const reactionType = queryKey[1];
-        console.log(reactionType);
+        // console.log(reactionType);
         return axios.post(
             `http://localhost:8080/api/post/like/${post_id}/${reactionType}`,
             {},

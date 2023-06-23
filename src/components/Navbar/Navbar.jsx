@@ -34,7 +34,7 @@ export default function Navbar() {
                 {
                     user.accessToken ? (
                         <>
-                            <li className="section"><Link className="link" to={`/profile/${user.id}`}>My Profile</Link></li>
+                            <li className="section"><Link className="link" to={`/profile/${user.id}`}>Profile</Link></li>
                             <li className="section"><Link className="link" to={"/stream"}>Stream</Link></li>
                             <li className="btn" onClick={logout}><Link className="link">Logout</Link></li>
                         </>

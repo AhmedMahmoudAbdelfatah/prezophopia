@@ -18,11 +18,15 @@ const UserContextProvider = (props) => {
     const navigate = useNavigate();
     
     const setUser = (user) => {
-         Cookies.set("user", JSON.stringify(user), {
-            expires: 7,
-            secure: true,
-        });
-        setValue(user);
+        console.log(user);
+        let userString = JSON.stringify(user);
+        if (userString) {
+            Cookies.set("user", userString, {
+                expires: 7,
+                secure: true,
+            });
+           setValue(user);
+        }
     }
 
     const logout = () => {

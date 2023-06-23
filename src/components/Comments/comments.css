@@ -55,4 +55,12 @@
         padding: 8px;
         border-radius: 20px;
     }
+    .post .comments .comment .input-container button[type="submit"] {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    .post .comments .comment .input-container div {
+        top: 2.5px;
+        right: 2px;
+    }
 }

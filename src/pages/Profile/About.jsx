@@ -180,9 +180,13 @@ export default function About(props) {
         <div>
           <h2>About</h2>
           <ul className="about-list">
-            <li>
-              <div className="text">{aboutText}</div>
-            </li>
+            {
+                aboutText ?
+                    <li>
+                        <div className="text">{aboutText}</div>
+                    </li>
+                :null
+            }
           </ul>
         </div>
       )}

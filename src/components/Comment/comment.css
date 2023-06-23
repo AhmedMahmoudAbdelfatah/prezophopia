@@ -201,6 +201,9 @@
 }
 
 @media (max-width: 432px) {
+    .comment-container {
+        padding: 0 7px;
+    }
     .post .full-comment .comment-actions .comment-feed .reactions > div {
         font-size: 14px;
     }

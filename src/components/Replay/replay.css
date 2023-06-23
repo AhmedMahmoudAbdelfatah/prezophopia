@@ -5,8 +5,11 @@
     margin-bottom: 10px;
 }
 
-.replay-container .img {
-    height: 25px;
+.replays .replay-container div.img {
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
 }
 
 .full-replay {

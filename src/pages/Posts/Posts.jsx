@@ -21,16 +21,21 @@ export default function Posts(props) {
         getPosts();
     }
 
-
+    const imageStyles = {
+        backgroundImage: `url(http://localhost:8080/${user.image_url})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+    }
     return (
         <div>
             <div className="posts-main">
                 <div className="posts-wraper">
                     <div className="start-post">
-                        <div className="img">
-                            {!user?.imgUrl?
+                        <div className="img" style={ user?.image_url? imageStyles : null}>
+                            {!user?.image_url?
                                 <FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /> 
-                                : <img src={`http://localhost:8080/${user?.imgUrl}`} alt=""/>
+                                // : <img src={`http://localhost:8080/${user?.image_url}`} alt=""/>
+                                : null
                             }
                         </div>
                         <div className="start" onClick={open}>Start a post</div>

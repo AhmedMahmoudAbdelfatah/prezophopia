@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useQuery } from "react-query";
 import { UserContext } from "../../../features/UserContext";
 
@@ -23,7 +23,7 @@ export const usePosts = (id) => {
             return respone?.data?.data;
         },
         onSuccess: (data) => {
-            console.log(data);
+            // console.log(data);
         },
         // refetchOnWindowFocus: false
     });

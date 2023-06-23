@@ -8,6 +8,7 @@ export const usePostReplay = (comment_id, setCommentsCount, getReplays) => {
     const { user } = useContext(UserContext);
 
     const postReplay = () => {
+        console.log("replay", replay);
         return axios.post(
             `http://localhost:8080/api/comment/replay/write/${comment_id}`,
             {
@@ -22,12 +23,13 @@ export const usePostReplay = (comment_id, setCommentsCount, getReplays) => {
         );
     };
 
-    const onSuccess = () => {
-        setCommentsCount((prev) => {
-            return prev + 1;
-        });
+    const onSuccess = (data) => {
+        // setCommentsCount((prev) => {
+        //     return prev + 1;
+        // });
         setReplay("");
         getReplays();
+        console.log(data);
     };
 
     const result = useQuery("post-replay", postReplay, {
@@ -43,5 +45,5 @@ export const usePostReplay = (comment_id, setCommentsCount, getReplays) => {
         }
     };
 
-    return { ...result, replay, setreplay: setReplay, handlePostReplay };
+    return { ...result, replay, setReplay, handlePostReplay };
 };

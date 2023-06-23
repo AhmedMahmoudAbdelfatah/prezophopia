@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import "./Profile.css"
-import Navbar from "../../components/Navbar/Navbar";
 import Posts from "../Posts/Posts"
 import Education from "./Education"
 import Skills from "./Skills"
@@ -10,11 +9,13 @@ import { useState , useEffect} from "react";
 import axios from "axios";
 import { UserContext } from "../../features/UserContext";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Profile(props) {
     const { userId } = useParams();
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     
     const isAuthorized  = +user.id === +userId;
 
@@ -84,7 +85,8 @@ export default function Profile(props) {
           }} )
       .then((response) => {
         // Handle the response from the backend if needed
-        console.log(response);
+          console.log(response);
+          setUser({...user, "image_url": response.data.data})
         setProfilePicture(URL.createObjectURL(file))
       })
       .catch((error) => {
@@ -110,8 +112,14 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
                     }}
             );
                         
-            console.log(followingResponse)
-          setIsFollowingValue((prev) => [...prev, userId]);
+          if (isFollowingValue.some((user) => +user.id === +userId)) {
+              setIsFollowingValue((prev) => {
+                  const temp = prev;
+                  return temp.map((user) => user.id !== userId);
+              });
+              
+          }
+          else setIsFollowingValue((prev) => [...prev, { id: userId }]);
           
       } catch (error) {
         console.log(error);
@@ -135,20 +143,23 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
             Authorization:
                 "Bearer " + user.accessToken
               }}
-              );
-              setProfilePicture(response?.data?.data?.image_url);
-              setCoverPhoto(response?.data?.data?.coverImage_url);
+          );
+          if (response?.data?.data?.image_url)
+              setProfilePicture(`http://localhost:8080/${response?.data?.data?.image_url}`);
+          else setProfilePicture('http://localhost:3000/images/noprofil.jpeg');
+          if (response?.data?.data?.coverImage_url)
+              setCoverPhoto(`http://localhost:8080/${response?.data?.data?.coverImage_url}`);
+          else setCoverPhoto('http://localhost:3000/images/nocover.jpeg');
               // console.log(response.data.data.user.id)
               setName(response.data.data.user.username)
             setUserPosts(response.data.data.user.userPosts)
-            const followingResponse = await axios.get(`http://localhost:8080/api/profile/following/get/${userId}` , {
+            const followingResponse = await axios.get(`http://localhost:8080/api/profile/following/get/${user.id}` , {
                         headers: {
                         "Content-Type": "application/json",
                         Authorization:
                             "Bearer " + user.accessToken
                         }}
                 );           
-            console.log(followingResponse)
             setIsFollowingValue(followingResponse.data.data)
               
       } catch (error) {
@@ -157,39 +168,56 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
     };
   
     fetchData();
-  }, []);
+  }, [user, userId]);
   
+    // const imageStyles = {
+    //             backgroundImage: `url(${image? image : "http://localhost:3000/images/noprofil.jpeg"})`,
+    //             backgroundPosition: "center",
+    //             backgroundSize: "cover"
+    //         }   
+    // const coverStyles = {
+    //             backgroundImage: `url(${coverimage? coverimage : "http://localhost:3000/images/nocover.jpeg"})`,
+    //             backgroundPosition: "center",
+    //             backgroundSize: "cover"
+    //         }   
 
 
   return (
-      <div>
-      <Navbar />
+      
       <div>
           <div className="profile"> 
-
-          <div className="profile-container">
-          <div class="upload-cover">
-            <img src={coverimage?`http://localhost:8080/${coverimage}`:'images/nocover.jpeg'} alt="Cover Img" className="cover-photo" width="100%"/>
-              <div className="round">
-                <label htmlFor="cover-input" className="label">Change cover photo</label>
-                <input type="file" id="cover-input" accept="image/*" onChange={handleCoverPhotoChange} />
-              </div>
+              <div className="profile-container">
+            <div class="upload-cover" >  
+            <img src={coverimage} alt="Cover Img" className="cover-photo" width="100%"/>
+              {
+                isAuthorized && <div className="round">
+                    <label htmlFor="cover-input" className="label">Change cover photo</label>
+                    <input type="file" id="cover-input" accept="image/*" onChange={handleCoverPhotoChange} />
+                </div>
+              }
           </div>
 
 
+            {
+                !isAuthorized && <button className="follow-btn" onClick={handleFollow}>
+                { isFollowingValue.some((user)=> {
+                    return +user.id === +userId;
+                }) ? 'Following' : 'Follow'}
+                </button>
+                
+            }
 
-          <button className="follow-btn" onClick={handleFollow}>
-          { isFollowingValue.indexOf(userId) >= 0? 'Following' : 'Follow'}
-          </button>
 
-
-
-            <div class="upload">
-              <img src={image?`http://localhost:8080/${image}`:'images/noprofil.jpeg'} alt="Profile Img" className="profile-picture" width = "100" height = "100"/>
-              <div className="round">
-                <input type="file" onChange={handleProfilePictureChange} />
-                <i class="fa-solid fa-camera"></i>
-              </div>
+               
+                <div class="upload" >
+              <img src={image} alt="Profile Img" className="profile-picture" width = "100" height = "100"/>
+              {
+                isAuthorized && <div className="round">      
+                    <input type="file" onChange={handleProfilePictureChange} />
+                    {/* <i class="fa-solid fa-camera"></i> */}
+                    <FontAwesomeIcon icon={faCamera} style={{color: "#FFF"}}/>
+                </div>
+              }
             <p className="profileUsername">{profileUsername === ''? 'userName' : profileUsername}</p>
             </div>
         </div>
@@ -229,11 +257,7 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
           </div>
 
           <div className="content-tabs">
-          <div
-            className={toggleState === 1 ? "content  active-content" : "content"}
-          >
-            {/* <Posts id={ isAuthorized? user.id : '' } /> */}
-          </div>
+         
 
 
           {/* Start Education */}
@@ -271,9 +295,17 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
 
           </div>
           </div>
-      </div> 
-  </div>
-      </div>
+          </div>
+          <div className="content-tabs">
+            <div
+                className={toggleState === 1 ? "content  active-content" : "content"}
+            >
+                <Posts id={ isAuthorized? userId : '' } />
+            </div>
+              
+          </div>
+    </div>
+          
       
   )
 }

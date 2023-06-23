@@ -46,7 +46,7 @@ export const useFeedsDetials = (initialFeeds) => {
     };
     
     useEffect(() => {
-        console.log(feeds);
+        // console.log(feeds);
         delete feeds[0];
         delete feeds[1];
         setNumberOfFeeds(Object.entries(feeds).reduce((prev, [key, value]) => {

@@ -61,7 +61,8 @@ const handleAddContact = async() => {
                   }
               }
               );
-              console.log(response);
+            //   console.log(response);
+              setContactInfoData([newContact]);
               setNewContact({
                 phone: "",
                 telephone: "",
@@ -293,12 +294,13 @@ useEffect(() => {
                   contactInfoData?.length?
                         <ul className="education-list">
                         {contactInfoData?.map((item, index) => (
+                            item?.telephone?
                             <li key={index}>
                             <p>{item?.telephone}</p>
                             <h3>{item?.phone}</h3>
                             <p>{item?.email}</p>
                             <p>{item?.address}</p>
-                            </li>
+                            </li> : null
                         ))}
                         </ul>
                     : null

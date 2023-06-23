@@ -1,3 +1,13 @@
+.post .replays {
+    width: 100%;
+    padding: 8px 0;
+}
+.post .replays .replay .img {
+    height: 40px;
+    width: 40px;
+    min-width: 40px;
+    min-height: 40px;
+}
 .post .replays .replay .input-container button[type="submit"] {
     outline: none;
     border: none;
@@ -54,5 +64,15 @@
     .post .replays .replay .input-container input {
         padding: 8px;
         border-radius: 20px;
+    }
+
+    .post .replays .replay .input-container button[type="submit"] {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .post .replays .replay .input-container div {
+        top: 2.5px;
+        right: 6px;
     }
 }
