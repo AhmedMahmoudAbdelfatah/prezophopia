@@ -88,6 +88,8 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../../features/UserContext";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function About(props) {
     const { user } = useContext(UserContext);
@@ -100,8 +102,10 @@ export default function About(props) {
 
   const [aboutText, setAboutText] = useState("");
   const [editMode, setEditMode] = useState(false);
-
+    const [error, setError] = useState('');
   const handleAboutInputChange = (e) => {
+      if (e?.target?.value?.length > 254) setError("you reached maximum length");
+      else setError('');
     setAboutText(e.target.value);
   };
 
@@ -175,6 +179,7 @@ export default function About(props) {
               )}
             </li>
           </ul>
+          {error &&  <div className="error-message" > <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: "8px" }} />  {error}</div>}
         </div>
       ) : (
         <div>

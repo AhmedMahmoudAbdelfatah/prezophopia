@@ -36,7 +36,9 @@ export default function Navbar() {
                         <>
                             <li className="section"><Link className="link" to={`/profile/${user.id}`}>Profile</Link></li>
                             <li className="section"><Link className="link" to={"/stream"}>Stream</Link></li>
-                            <li className="btn" onClick={logout}><Link className="link">Logout</Link></li>
+                            <li className="section"><Link className="link" to={"/chat"}>Chat</Link></li>
+                            <span style={{color: "#3180e7"}}>{user.username}</span>
+                            <li className="btn" onClick={logout}><Link className="link"> Logout</Link></li>
                         </>
                     ) 
                     :        

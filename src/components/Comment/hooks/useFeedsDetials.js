@@ -30,7 +30,7 @@ export const useFeedsDetials = (initialFeeds) => {
         },
         4: {
             class: "laughing",
-            desc: "Hahaha",
+            desc: "Haha",
             emoji: <Emoji symbol="&#x1F602;" />,
         },
         5: {
@@ -46,7 +46,7 @@ export const useFeedsDetials = (initialFeeds) => {
     };
 
     useEffect(() => {
-        console.log(feeds);
+        // console.log(feeds);
         delete feeds[0];
         delete feeds[1];
         setNumberOfFeeds(

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getFeedsLeftPadding } from './utils/getFeedsLeftPadding';
 import { useState } from 'react';
 import Replays from '../Replays/Replays';
+import { Link } from 'react-router-dom';
 
 
 const Comment = (props) => {
@@ -16,17 +17,25 @@ const Comment = (props) => {
 
     const [isReplay, setIsReplay] = useState(false);
 
+     const imageStyles = {
+        backgroundImage: `url(http://localhost:8080/${props?.author?.image_url})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+    }
+
+
     return (
-        <section className="comment-container" key={props?.id}>
-            <div className="img">
-                {props?.author?.image_url ?
-                    <img src={`http://localhost:8080/${props?.author?.imgUrl}`} alt=""  />
-                    : <FontAwesomeIcon icon={faUserAlt} style={{ height: "18px", color: "#414141" }} /> 
+        <section className="comment-container" >
+            <div className="img" style={ props?.author?.image_url? imageStyles : null}>
+                {!props?.author?.image_url?
+                    <FontAwesomeIcon icon={faUserAlt} style={{ height: "18px", color: "#414141" }} /> 
+                    // : <img src={`http://localhost:8080/${user?.image_url}`} alt=""/>
+                    : null
                 }
-            </div>
+             </div>
             <div className="full-comment">
                 <div className="text-container">
-                    <div className="name">{ props?.author?.username }</div>
+                    <div className="name"><Link to={`/profile/${props?.author?.id}`}>{ props?.author?.username }</Link></div>
                     <div className="text">{props?.text} </div>
                     {
                         numberOfFeeds ? (

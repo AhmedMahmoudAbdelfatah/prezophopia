@@ -170,16 +170,16 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
     fetchData();
   }, [user, userId]);
   
-    // const imageStyles = {
-    //             backgroundImage: `url(${image? image : "http://localhost:3000/images/noprofil.jpeg"})`,
-    //             backgroundPosition: "center",
-    //             backgroundSize: "cover"
-    //         }   
-    // const coverStyles = {
-    //             backgroundImage: `url(${coverimage? coverimage : "http://localhost:3000/images/nocover.jpeg"})`,
-    //             backgroundPosition: "center",
-    //             backgroundSize: "cover"
-    //         }   
+    const imageStyles = {
+                backgroundImage: `url(${image? image : "http://localhost:3000/images/noprofil.jpeg"})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover"
+            }   
+    const coverStyles = {
+                backgroundImage: `url(${coverimage? coverimage : "http://localhost:3000/images/nocover.jpeg"})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover"
+            }   
 
 
   return (
@@ -187,8 +187,8 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
       <div>
           <div className="profile"> 
               <div className="profile-container">
-            <div class="upload-cover" >  
-            <img src={coverimage} alt="Cover Img" className="cover-photo" width="100%"/>
+            <div class="upload-cover"  style={coverStyles}>  
+            {/* <img src={coverimage} alt="Cover Img" className="cover-photo" width="100%"/> */}
               {
                 isAuthorized && <div className="round">
                     <label htmlFor="cover-input" className="label">Change cover photo</label>
@@ -209,8 +209,8 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
 
 
                
-                <div class="upload" >
-              <img src={image} alt="Profile Img" className="profile-picture" width = "100" height = "100"/>
+            <div class="upload" style={imageStyles}>
+              {/* <img src={image} alt="Profile Img" className="profile-picture" width = "100" height = "100"/> */}
               {
                 isAuthorized && <div className="round">      
                     <input type="file" onChange={handleProfilePictureChange} />

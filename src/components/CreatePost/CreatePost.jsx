@@ -30,7 +30,7 @@ export default function CreatePost(props) {
                     <textarea name="postText" placeholder="What's in your mind?" onChange={handleTextArea}></textarea>
                     {post.images ? (
                         <div className='imgs'>
-                            {post.images.map((image, i) => {
+                            {post?.images?.map((image, i) => {
                                 const imagerc = URL.createObjectURL(image);
                                 return (
                                     <div className='img' key={image.lastModified}>

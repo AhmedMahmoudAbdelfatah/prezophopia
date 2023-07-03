@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faTwitter, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import { UserContext } from "../../features/UserContext";
 import { useParams } from "react-router-dom";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -20,11 +21,11 @@ export default function Contact(props) {
       // console.log(contactInfoDataAPI)
     
   // START Contact-Info List
-const contactInfoDataList = [
-  { label: 'Email', value: 'example@example.com' },
-  { label: 'Phone', value: '123-456-7890' },
-  { label: 'Address', value: '123 Main St, City, State' },
-];
+// const contactInfoDataList = [
+//   { label: 'Email', value: 'example@example.com' },
+//   { label: 'Phone', value: '123-456-7890' },
+//   { label: 'Address', value: '123 Main St, City, State' },
+// ];
 
 
 
@@ -39,13 +40,7 @@ const [newContact, setNewContact] = useState({
 
 const [editContactIndex, setEditContactIndex] = useState(null);
 
-const handleContactInputChange = (e) => {
-  const { name, value } = e.target;
-  setNewContact((prevEducation) => ({
-    ...prevEducation,
-    [name]: value
-  }));
-};
+
 
 const handleAddContact = async() => {
   if (newContact.phone && newContact.telephone && newContact.email&& newContact.address) {
@@ -105,12 +100,72 @@ const [link, setLink] = useState({
   url: ""
 });
 
+    const [error, setError] = useState('');
+
+const handleContactInputChange = (e) => {
+  const { name, value } = e.target;
+  setNewContact((prevEducation) => ({
+    ...prevEducation,
+    [name]: value
+  }));
+
+  // Perform validation and display error message
+  if (name === 'phone' && !validatePhone(value)) {
+    setError('Invalid phone number format');
+  } else if (name === 'telephone' && !validateTelephone(value)) {
+    setError('Invalid telephone number format');
+  } else if (name === 'email' && !validateEmail(value)) {
+    setError('Invalid email address');
+  }
+  else if (name === "address" && !validateAddress(value)) setError("Invalid address"); 
+  else {
+    setError('');
+  }
+};
+
+const validateAddress = (address) => {
+    const addressRegex = /^(?=[\w\d])[ \w\d,-]{8,50}[ \w\d,-]$/
+    return addressRegex.test(address);
+}
+
+// Start Validation functions
+const validatePhone = (phone) => {
+  const phoneRegex = /^0\d{10}$/; // Regular expression to match 11-digit phone numbers
+  return phoneRegex.test(phone);
+};
+
+const validateTelephone = (telephone) => {
+  const telephoneRegex = /^0\d{9}$/ // Regular expression to match 10-digit telephone numbers
+  return telephoneRegex.test(telephone);
+};
+
+const validateEmail = (email) => {
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;// Regular expression to validate email addresses
+  return emailRegex.test(email);
+};
+
+const [urlError, setUrlError] = useState("");
+
 const handleInputChange = (event) => {
   const { name, value } = event.target;
   setLink((prevLink) => ({
     ...prevLink,
     [name]: value
   }));
+
+  if (!value) {
+    setUrlError("Please select a social media and enter a URL.");
+  } else if (!validateURL(value)) {
+    setUrlError("Please enter a valid URL.");
+  } else {
+    setUrlError("");
+  }
+};
+
+const validateURL = (url) => {
+  // Regular expression pattern to validate URL
+  const urlPattern =  /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9]-*)*[a-z0-9]+)(?:\.(?:[a-z0-9]-*)*[a-z0-9]+)*(?:\.(?:[a-z]{2,})))(?::\d{2,5})?(?:\/\S*)?$/i;
+  return urlPattern.test(url);
 };
 
 const handleSocialAddButtonClick = () => {
@@ -214,7 +269,7 @@ useEffect(() => {
                     name="phone"
                     value={newContact.phone}
                     onChange={handleContactInputChange}
-                    placeholder="phone"
+                    placeholder="Enter a valid phone number (e.g., 01234567890)"
                   />
                 <input
                     className="input-to-add"
@@ -222,7 +277,7 @@ useEffect(() => {
                     name="telephone"
                     value={newContact.telephone}
                     onChange={handleContactInputChange}
-                    placeholder="telephone"
+                    placeholder="Enter your telephone number (e.g., 0282584428)"
                   />
                   
                   <input
@@ -231,8 +286,8 @@ useEffect(() => {
                     name="email"
                     value={newContact.email}
                     onChange={handleContactInputChange}
-                    placeholder="email"
-                  />
+                    placeholder="Enter your email address"
+                    />
                  
                   <input
                     className="input-to-add"
@@ -240,8 +295,9 @@ useEffect(() => {
                     name="address"
                     value={newContact.address}
                     onChange={handleContactInputChange}
-                    placeholder="address"
-                  />
+                    placeholder="Enter Valid Address (eg., 1234 Main St, Anytown, NY 12345)"
+                    />
+                    {error &&  <div className="error-message" ><FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: "8px" }} />  {error}</div>}
                   <button className="add-button input-to-add" onClick={handleAddContact}>
                     {editContactIndex !== null ? 'Update' : 'Add'}
                   </button>
@@ -249,14 +305,12 @@ useEffect(() => {
               </ul>
           <h2 style={{marginTop: '50px'}}>Social Media</h2>
               <div>
-                  <input
-                  className="input-url"
-                  type="text"
-                  name="name"
-                  placeholder="Social Media Name Ex: facebook or witter or linkedin"
-                  value={link.name}
-                  onChange={handleInputChange}
-                />
+                 <select className="input-url" name="name" onChange={handleInputChange}>
+                    <option value="">Select social media</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="twitter">Twitter</option>
+                    <option value="linkedin">LinkedIn</option>
+                </select>
                 <input
                 className="input-url"
                   type="text"
@@ -265,8 +319,9 @@ useEffect(() => {
                   value={link.url}
                   onChange={handleInputChange}
                 />
-                <button onClick={handleSocialAddButtonClick}className="add-button add-button-url">Add</button>
+                <button onClick={handleSocialAddButtonClick} disabled={!!urlError} className="add-button add-button-url">Add</button>
               </div>
+                {urlError && <p className="url-error error-message"><FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: "8px" }} />{urlError}</p>}
               <div className="social-icons">
                 {
                     facebookUrlfromAPI? <a href={`${facebookUrlfromAPI}`} className="f-facebook" target="_blank" rel="noreferrer">

@@ -5,23 +5,33 @@ import { useGetReplays } from './hooks/useGetReplays';
 import { usePostReplay } from './hooks/usePostReplay';
 import Replay from "../Replay/Replay"
 import Loading from '../Loading/Loading';
+import { useContext } from 'react';
+import { UserContext } from '../../features/UserContext';
 
 
 const Replays = (props) => {
     const { data:replays, refetch:getReplays, isFetchedAfterMount, isLoading, isFetching } = useGetReplays(props.id);
     
     const { replay, setReplay, handlePostReplay } = usePostReplay(props.id, props.setCommentsCount, getReplays);
-
     
+    const { user } = useContext(UserContext);
+
+    const imageStyles = {
+        backgroundImage: `url(http://localhost:8080/${user?.image_url})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+    }
+
     return (
         <section className="replays">
             <form className="replay" onSubmit={handlePostReplay}>
-                <div className="img">
-                    {props?.image_url ?
-                        <img src={`http://localhost:8080/${props.image_url}`} alt=""  />
-                        : <FontAwesomeIcon icon={faUserAlt} style={{ height: "16px", color: "#414141" }} /> 
-                    }
-                </div>
+                <div className="img" style={ user?.image_url? imageStyles : null}>
+                            {!user?.image_url?
+                                <FontAwesomeIcon icon={faUserAlt} style={{ height: "16px", color: "#414141" }} /> 
+                                // : <img src={`http://localhost:8080/${user?.image_url}`} alt=""/>
+                                : null
+                            }
+                        </div>
                 <div className="input-container">
                     <input type="text" onChange={(e) => setReplay(e.target?.value ?? "")} value={ replay } />
                     <div>

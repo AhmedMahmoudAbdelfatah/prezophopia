@@ -221,6 +221,8 @@ import { useState , useEffect} from "react";
 import axios from "axios";
 import { UserContext } from "../../features/UserContext";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -247,6 +249,15 @@ export default function Education(props) {
 
 // const [EducationDataFromAPI , setEducationDataFromAPI] = useState()
 
+const [error, setError] = useState('');
+
+  function isValidDateFormat(dateString) {
+    // Regular expression pattern for dd/mm/yyyy format
+    var pattern = /^\d{2}\/\d{2}\/\d{4}$/;
+  
+    // Check if the input matches the pattern
+    return pattern.test(dateString);
+  }
 
 const [educationData, setEducationData] = useState([]);
 
@@ -260,12 +271,29 @@ const [newEducation, setNewEducation] = useState({
 const [editEducationIndex, setEditEducationIndex] = useState(null);
 
 const handleEducationInputChange = (e) => {
-  const { name, value } = e.target;
-  setNewEducation((prevEducation) => ({
-    ...prevEducation,
-    [name]: value
-  }));
-};
+    const { name, value } = e.target;
+
+    if (name === 'instituteName' && value.length > 40) {
+      setError('Maximum length exceeded for institute name');
+    } else if (name === 'degree' && value.length > 40)  {
+      setError('Maximum length exceeded for degree');
+    }
+    else if (name === 'instituteName' && value.length <= 0) {
+        setError('instituteName can not be empty')
+    }
+    else if (name === 'degree' && value.length <= 0) {
+        setError('degree can not be empty')
+    }
+    else if ((name === 'from' || name === 'to') && isValidDateFormat(value)) {
+      setError('Invalid date format (dd/mm/yyyy)');
+    } else {
+      setError('');
+    }
+    setNewEducation((prevEducation) => ({
+      ...prevEducation,
+      [name]: value
+    }));
+  };
 
 const handleAddEducation = async() => {
   if (newEducation.instituteName && newEducation.degree && newEducation.from&& newEducation.to) {
@@ -389,7 +417,7 @@ useEffect(() => {
                     name="instituteName"
                     value={newEducation?.instituteName}
                     onChange={handleEducationInputChange}
-                    placeholder="institute name"
+                    placeholder="Enter Institute Name"
                   />
                 <input
                     className="input-to-add"
@@ -397,12 +425,12 @@ useEffect(() => {
                     name="degree"
                     value={newEducation?.degree}
                     onChange={handleEducationInputChange}
-                    placeholder="degree"
+                    placeholder="Enter Degree"
                   />
                   
                   <input
                     className="input-to-add"
-                    type="text"
+                    type="date"
                     name="from"
                     value={newEducation?.from}
                     onChange={handleEducationInputChange}
@@ -411,12 +439,13 @@ useEffect(() => {
                  
                   <input
                     className="input-to-add"
-                    type="text"
+                    type="date"
                     name="to"
                     value={newEducation?.to}
                     onChange={handleEducationInputChange}
                     placeholder="yyyy/mm/dd"   
-                  />
+                    />
+                    {error &&  <div className="error-message" > <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: "8px" }} />  {error}</div>}
                   <button className="add-button input-to-add" onClick={handleAddEducation}>
                     {editEducationIndex !== null ? 'Update' : 'Add'}
                   </button>

@@ -21,6 +21,7 @@ export const usePostHandlers = () => {
     const handleFileSelect = (e, type = "file") => {
         if (type === "images")
             setPost((pre_post) => {
+                // console.log([...e.target.files].slice(0, 9));
                 return { ...pre_post, images: [...e.target.files].slice(0, 9) };
             });
         else if (type === "video")
@@ -41,10 +42,10 @@ export const usePostHandlers = () => {
 
     const removeImg = (index, key) => {
         console.log(index, key);
-        if (key !== post.images[index]?.lastModified) return;
+        if (key !== post?.images[index]?.lastModified) return;
         setPost((pre_post) => {
-            pre_post.images.splice(index, 1);
-            return { ...pre_post, images: pre_post.image };
+            pre_post?.images?.splice(index, 1);
+            return { ...pre_post, images: pre_post.images };
         });
     };
 

@@ -37,14 +37,24 @@ export default function Post(props) {
     }
 
    
-   
+    const imageStyles = {
+        backgroundImage: `url(http://localhost:8080/${props?.author?.image_url})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+    }
 
     return (
         <div class="post">
             <header>
                 <div>
-                    <div className="img"><FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /></div>
-                    <Link className="link"><span>{ props?.author?.username }</span></Link>
+                   <div className="img" style={ props?.author?.image_url? imageStyles : null}>
+                            {!props?.author?.image_url?
+                                <FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /> 
+                                // : <img src={`http://localhost:8080/${user?.image_url}`} alt=""/>
+                                : null
+                            }
+                    </div>
+                    <Link className="link" to={`/profile/${props?.author?.id}`}><span>{ props?.author?.username }</span></Link>
                 </div>
                 <div className="img"><FontAwesomeIcon icon={faEllipsisH} style={{ height: "20px", color: "#65676B"}} /></div>
             </header>
@@ -115,7 +125,7 @@ export default function Post(props) {
                 </div>
             </footer>
             {isComment ?
-                <Comments post_id={props.id} img_url={user.image_url} setCommentsCount={ setCommentsCount } />
+                <Comments post_id={props.id} image_url={user.image_url} setCommentsCount={ setCommentsCount } />
                 : null}
         </div>
     );

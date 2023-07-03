@@ -11,6 +11,7 @@ import UserContextProvider from "./features/UserContext";
 import VideoStream from "./pages/VideoStream/VideoStream";
 import Navbar from "./components/Navbar/Navbar";
 import PrivateRoute from "./features/PrivateRoute";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     <Route element={<PrivateRoute />}>
                         <Route element={<Profile />} path="profile/:userId" />
                         <Route element={<VideoStream />} path="stream" />
+                        <Route element={ <Chat /> }  path="chat"/>
                     </Route>
                 </Route>
                 <Route element={<SignIn />} path="/signin" />

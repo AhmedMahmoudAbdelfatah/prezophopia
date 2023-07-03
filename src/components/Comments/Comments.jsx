@@ -12,16 +12,22 @@ const Comments = (props) => {
     
     const { comment, setComment, handlePostComment } = usePostComment(props.post_id, props.setCommentsCount, getComments);
 
+    const imageStyles = {
+        backgroundImage: `url(http://localhost:8080/${props?.image_url})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+    }
     
     return (
         <section className="comments">
             <form className="comment" onSubmit={handlePostComment}>
-                <div className="img">
-                    {props?.image_url ?
-                        <img src={`http://localhost:8080/${props.image_url}`} alt=""  />
-                        : <FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /> 
-                    }
-                </div>
+                <div className="img" style={ props?.image_url? imageStyles : null}>
+                            {!props?.image_url?
+                                <FontAwesomeIcon icon={faUserAlt} style={{ height: "25px", color: "#414141" }} /> 
+                                // : <img src={`http://localhost:8080/${user?.image_url}`} alt=""/>
+                                : null
+                            }
+                        </div>
                 <div className="input-container">
                     <input type="text" onChange={(e) => setComment(e.target?.value ?? "")} value={ comment } />
                     <div>

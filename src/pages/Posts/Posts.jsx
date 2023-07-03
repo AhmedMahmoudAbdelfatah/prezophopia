@@ -8,6 +8,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../features/UserContext";
 import { usePosts } from "./hooks/usePosts";
 import Loading from "../../components/Loading/Loading";
+import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
 
 
 export default function Posts(props) {
@@ -26,6 +27,7 @@ export default function Posts(props) {
         backgroundPosition: "center",
         backgroundSize: "cover"
     }
+
     return (
         <div>
             <div className="posts-main">
@@ -53,6 +55,7 @@ export default function Posts(props) {
                     {isOpen ? <CreatePost close={close} /> : null}
                 </div>
             </div>
+            <ScrollToTopButton />
         </div>
     );
 }

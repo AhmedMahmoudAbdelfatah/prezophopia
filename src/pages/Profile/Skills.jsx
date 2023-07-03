@@ -93,7 +93,7 @@ import axios from "axios";
 import { UserContext } from "../../features/UserContext";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
+import { faDeleteLeft, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -111,12 +111,6 @@ export default function Skills(props) {
   const [newSkill, setNewSkill] = useState('');
   
 
-
-
-
-  const handleSkillsInputChange = (e) => {
-    setNewSkill(e.target.value);
-  };
   
   const handleAddSkill = async () => {
     if (newSkill) {
@@ -167,6 +161,23 @@ export default function Skills(props) {
     updatedSkills.splice(index, 1);
     setSkills(updatedSkills);
   };
+  const [error, setError] = useState('');
+
+  const handleSkillsInputChange = (event) => {
+    const inputValue = event.target.value;
+
+    // Validate the input
+    if (inputValue.length > 0 && inputValue.length <= 20) {
+      // Valid input
+      setError(""); // Clear any previous error
+    } else {
+        // Invalid input
+        //   setNewSkill("");
+        setError("Skill should be between 1 and 20 characters"); // Set the error message
+    }
+    setNewSkill(inputValue);
+    
+  };
 
   return (
       <div>
@@ -177,7 +188,7 @@ export default function Skills(props) {
           <ul className="skills-list">
             {skills.map((skill, index) => (
               <li key={index}>
-                <span className="text">{skill}</span>
+                    <span className="text">{skill}</span>
                     <button className="delete-button" onClick={() => handleDeleteSkill(index)}>
                         {/* <i class="fa-solid fa-delete-left"></i> */}
                         <FontAwesomeIcon icon={faDeleteLeft}/>
@@ -188,6 +199,7 @@ export default function Skills(props) {
               <input type="text" value={newSkill} onChange={handleSkillsInputChange} />
               <button className="add-button" onClick={handleAddSkill}>Add</button>
             </li>
+          {error &&  <div className="error-message" ><FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: "8px" }} />  {error}</div>}
           </ul>
         </div>
         ) : (
