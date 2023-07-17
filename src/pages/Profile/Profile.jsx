@@ -300,7 +300,7 @@ const [isFollowingValue, setIsFollowingValue] = useState([]);
             <div
                 className={toggleState === 1 ? "content  active-content" : "content"}
             >
-                <Posts id={ isAuthorized? userId : '' } />
+                <Posts id={ userId } />
             </div>
               
           </div>

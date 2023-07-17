@@ -396,8 +396,8 @@ useEffect(() => {
                     <div>
                       <div className="institute name">{education?.instituteName}</div>
                       <div className="degree">{education?.degree}</div>
-                      <div className="from">{education?.from?.split('T')[0]}</div>
-                      <div className="to">{education?.to?.split('T')[0]}</div>
+                      <div className="from">{new Date(education?.from).toLocaleDateString().split('T')[0]}</div>
+                      <div className="to">{new Date(education?.to).toLocaleDateString().split('T')[0]}</div>
                     </div>
                     <div className="buttons-container">
                       <button className="edit-button" onClick={() => handleEditEducation(index)}>
@@ -465,8 +465,8 @@ useEffect(() => {
                                 <li key={index}>
                                     <p>{item?.degree}</p>
                                     <h3>{item?.instituteName}</h3>
-                                    <p>{item?.from?.split('T')[0]}</p>
-                                    <p>{item?.to?.split('T')[0]}</p>
+                                    <p>{new Date(item?.from).toLocaleDateString().split('T')[0]}</p>
+                                    <p>{new Date(item?.to).toLocaleDateString().split('T')[0]}</p>
                                 </li>
                             : null
                             

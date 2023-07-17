@@ -30,7 +30,6 @@ const VideoStream = () => {
             refetch();
         });
     }
-
     
     
     return (
@@ -54,7 +53,7 @@ const VideoStream = () => {
                         null
                         :
                         <div className="last-session">
-                            <h1>Last Session Analaysis</h1>
+                            <h1>Last Session Analysis</h1>
                             <div className="chart">
                                 <LineChart data={ data?.chartData } yLabels={ data.yLabels } />
                             </div>

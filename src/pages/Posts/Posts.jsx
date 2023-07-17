@@ -9,14 +9,18 @@ import { UserContext } from "../../features/UserContext";
 import { usePosts } from "./hooks/usePosts";
 import Loading from "../../components/Loading/Loading";
 import ScrollToTopButton from "../../components/ScrollToTopButton/ScrollToTopButton";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Posts(props) {
     const { data: posts, refetch:getPosts, isLoading, isFetching, isFetchedAfterMount } = usePosts(props?.id);
     const [isOpen, setIsOpen] = useState(false);
     const { user } = useContext(UserContext);
-
-    const open = () => setIsOpen(true);
+    const navigate = useNavigate();
+    const open = () => {
+        if (user?.accessToken) setIsOpen(true);
+        else navigate('/signin');
+    }
     const close = () => {
         setIsOpen(false);
         getPosts();
