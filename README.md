@@ -9,6 +9,8 @@ The frontend of the Prezophopia project is built using the following technologie
 - React.js
 - Axios
 - React-Router-Dom
+- React Query
+- Context API
 - HTML5
 - CSS3
 - Font Awesome
@@ -24,6 +26,14 @@ Axios is a popular JavaScript library for making HTTP requests. It simplifies th
 ### React-Router-Dom
 
 React-Router-Dom is a routing library for React applications. It allows developers to define routes and navigation within a React application, making it easier to handle multiple pages or views. React-Router-Dom is used in the Prezophopia project to handle navigation between different views, including the login page, user profile page, and post creation page.
+
+### React Query
+
+React Query is a library for fetching, caching, and updating data in React applications. It allows you to make requests and handle response metadata with declarative hooks that are tied to a unique key12. React Query also provides features such as background refetching, pagination, optimistic updates, and more.
+
+### Context API
+
+Context API is a feature of React that allows you to share data that can be considered global for a tree of React components, such as the current authenticated user, theme, or preferred language1. You can use Context API to avoid prop drilling, which is passing data through intermediate components that don`t need it.
 
 ### HTML5
 
@@ -45,17 +55,18 @@ To run the frontend of the Prezophopia project on your local machine, follow the
 
 git clone https://github.com/ahmedmamoudabdelfatah-gif/prezophopia.git
 
-
 2. Install the necessary dependencies by running the following command in the project directory:
 
 ```
 npm install
 ```
+
 Start the development server by running the following command:
 
 ```
 npm start
 ```
+
 This will launch the Prezophopia website in your default browser at http://localhost:3000.
 
 ## Features
