@@ -22,6 +22,10 @@ The website is built using the following technologies:
 - **Chat service**: React and Node.js with Socket.io
 - **AI**: Keras
 
+## Demo
+
+<video src='./demo.mp4' controls/>
+
 ## License
 
 The project is licensed under the MIT License. See [LICENSE] file for more details.
