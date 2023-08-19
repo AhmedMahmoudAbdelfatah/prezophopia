@@ -24,7 +24,9 @@ The website is built using the following technologies:
 
 ## Demo
 
-<video src='./demo.mp4' controls/>
+Here is a demo for the project. Feel free to check it out.
+
+https://drive.google.com/file/d/10vw_1fxjF69hPuoeGB3F65tZgHQyRbOv/view?usp=drive_link
 
 ## License
 
