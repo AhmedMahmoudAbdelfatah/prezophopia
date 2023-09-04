@@ -24,8 +24,6 @@ The website is built using the following technologies:
 
 ## Demo
 
-<video src='./demo.mp4' controls/>
+Here is a demo for the project. Feel free to check it out.
 
-## License
-
-The project is licensed under the MIT License. See [LICENSE] file for more details.
+https://drive.google.com/file/d/1_sGFzjK6KxYw9NbnZhJt9-vfIjIZdvLt/view?usp=drive_link
