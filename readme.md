@@ -22,8 +22,9 @@ The website is built using the following technologies:
 - **Chat service**: React and Node.js with Socket.io
 - **AI**: Keras
 
+
 ## Demo
 
-Here is a demo for the project. Feel free to check it out.
+https://github.com/user-attachments/assets/d39acd0a-82d4-4062-be66-26e9924ef9f0
 
-https://drive.google.com/file/d/1_sGFzjK6KxYw9NbnZhJt9-vfIjIZdvLt/view?usp=drive_link
+
